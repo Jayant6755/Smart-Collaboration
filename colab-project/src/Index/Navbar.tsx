@@ -1,14 +1,19 @@
 import { Link, useLocation } from "react-router-dom";
 import { Bell, LogOut, Settings, LayoutGrid, MessageSquare, ClipboardList } from "lucide-react";
+import { useAuthState } from "@/useState/authState";
 
 function Navbar() {
   const location = useLocation();
+  const {signOut}=useAuthState()
 
   const navigations = [
     { name: 'Dashboard', link: '/', icon: <LayoutGrid size={18} /> },
     { name: 'Task', link: '/task', icon: <ClipboardList size={18} /> },
     { name: 'Chat', link: '/chat', icon: <MessageSquare size={18} /> }
   ];
+  const signout=()=>{
+      signOut();
+  }
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-blue-50 px-6 py-3">
@@ -65,7 +70,8 @@ function Navbar() {
           <div className="h-8 w-[1px] bg-slate-100 mx-2"></div>
 
           {/* Logout Button */}
-          <button className="flex items-center gap-2 pl-3 pr-4 py-2 text-sm font-bold text-red-500 hover:bg-red-50 rounded-xl transition-all">
+          <button className="flex items-center gap-2 pl-3 pr-4 py-2 text-sm font-bold text-red-500 hover:bg-red-50 rounded-xl transition-all"
+          onClick={signout}>
             <LogOut size={18} />
             <span>Logout</span>
           </button>

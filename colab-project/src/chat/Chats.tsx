@@ -17,6 +17,10 @@ function Chats() {
     { id: "receiver", msg: "Just finished the responsive layout! It's looking sharp.", name: "Alex", time: "10:02 AM" },
     { id: "receiver2", msg: "I'm working on the AI chat assistant icons right now.", name: "Jordan", time: "10:05 AM" },
     { id: "user", msg: "Great work everyone! Let's aim for a Friday demo.", time: "10:10 AM" },
+     { id: "receiver2", msg: "I'm working on the AI chat assistant icons right now.", name: "Jordan", time: "10:05 AM" },
+    { id: "user", msg: "Great work everyone! Let's aim for a Friday demo.", time: "10:10 AM" },
+     { id: "receiver2", msg: "I'm working on the AI chat assistant icons right now.", name: "Jordan", time: "10:05 AM" },
+    { id: "user", msg: "Great work everyone! Let's aim for a Friday demo.", time: "10:10 AM" }
   ]
 
   return (
@@ -30,7 +34,7 @@ function Chats() {
            </button>
         </div>
         <ScrollArea className="w-full whitespace-nowrap">
-          <div className="flex w-max space-x-4 p-1">
+          <div className="flex w-max space-x-7 p-1">
             {groups.map((g, i) => (
               <div key={i} className="flex flex-col items-center gap-2 group cursor-pointer">
                 <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
@@ -45,7 +49,7 @@ function Chats() {
       </div>
 
       {/* Main Chat Area */}
-      <ScrollArea className="flex-1 p-6">
+      <ScrollArea className="flex-1 p-3 h-100">
         <div className="max-w-4xl mx-auto space-y-6">
           {chats.map((c, i) => {
             const isUser = c.id === "user";
@@ -77,7 +81,7 @@ function Chats() {
       </ScrollArea>
 
       {/* Input Bar */}
-      <div className="p-4 bg-white border-t border-blue-50">
+      <div className="relative bottom-0 p-4 bg-white border-t border-blue-50">
         <div className="max-w-4xl mx-auto relative flex items-center gap-2">
           <div className="relative flex-1">
              <input 

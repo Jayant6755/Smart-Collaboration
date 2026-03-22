@@ -1,119 +1,214 @@
-import { File, ThermometerSnowflake, User, Sparkles, Activity, LayoutDashboard } from "lucide-react"
+import { 
+  File, ThermometerSnowflake, User, Sparkles, Activity, 
+  LayoutDashboard, Menu, Folder, Hash, Star, Settings, LogOut, Plus 
+} from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
-
+import { Button } from "@/components/ui/button"
+import { 
+  Sheet, 
+  SheetContent, 
+  SheetHeader, 
+  SheetTitle, 
+  SheetTrigger 
+} from "@/components/ui/sheet"
+import NewProject from "./NewProject"
 
 function Main() {
+  const projectGroups = [
+    {
+      title: "Favorites",
+      icon: <Star size={14} className="text-amber-500" />,
+      items: ["Project Alpha", "Marketing Site"]
+    },
+    {
+      title: "Active Projects",
+      icon: <Folder size={14} className="text-blue-500" />,
+      items: ["Project Gamma", "Database Sync", "Mobile App UI"]
+    }
+  ]
+
   const cards = [
-    { name: "Active Task", value: 12, logo: <ThermometerSnowflake className="text-blue-600" /> },
-    { name: "File Thread", value: 12, logo: <File className="text-blue-600" /> },
-    { name: "Team Member", value: 12, logo: <User className="text-blue-600" /> }
+    { name: "Active Tasks", value: 12, logo: <ThermometerSnowflake size={20} /> },
+    { name: "File Threads", value: 48, logo: <File size={20} /> },
+    { name: "Team Members", value: 8, logo: <User size={20} /> }
   ]
 
   const activi = [
-    { name: "Task 1", value: "Completed", time: "2 mins ago" },
-    { name: "Task 2", value: "In Progress", time: "1 hour ago" },
-    { name: "Task 3", value: "Pending", time: "3 hours ago" },
-    { name: "Task 4", value: "Pending", time: "Yesterday" },
+    { name: "Database Migration", value: "Completed", time: "2 mins ago" },
+    { name: "API Integration", value: "In Progress", time: "1 hour ago" },
+    { name: "Frontend Cleanup", value: "Pending", time: "3 hours ago" },
+    { name: "Bug Squash #402", value: "Pending", time: "Yesterday" },
   ]
 
   return (
-    <div className="min-h-screen w-full bg-[#f8faff] p-8 font-sans text-slate-900">
+    <div className="min-h-screen w-full bg-[#f8faff] p-4 md:p-8 font-sans text-slate-900">
+      
       {/* Header Section */}
-      <header className="mb-8 flex items-center justify-between">
-        <div>
-          <h1 className="text-sm font-bold uppercase tracking-widest text-blue-600">Overview</h1>
-          <h2 className="text-3xl font-extrabold tracking-tight">
-            Project <span className="text-transparent bg-clip-text bg-linear-to-br from-blue-600 to-indigo-500">DASHBOARD</span>
-          </h2>
-        </div>
-        <div className="bg-white p-2 rounded-full shadow-sm border border-blue-100">
-          <div className="h-10 w-10 rounded-full bg-blue-600 flex items-center justify-center text-white">
-            <User size={20} />
+      <header className="mb-10 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Sheet>
+            <SheetTrigger >
+              <Button variant="outline" size="icon" className="rounded-xl border-blue-100 bg-white shadow-sm hover:bg-blue-50 transition-colors">
+                <Menu className="text-blue-600" size={20} />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-80 p-0 border-r-blue-50 flex flex-col">
+              <SheetHeader className="p-6 border-b border-slate-50">
+                <SheetTitle className="flex items-center gap-3 text-blue-600 font-bold text-xl">
+                  <div className="bg-blue-600 p-1.5 rounded-lg text-white">
+                    <LayoutDashboard size={18} />
+                  </div>
+                  SyncSphere
+                </SheetTitle>
+              </SheetHeader>
+
+              <ScrollArea className="flex-1 px-4 py-6">
+                <div className="space-y-8">
+                  {projectGroups.map((group, idx) => (
+                    <div key={idx} className="space-y-3">
+                      <h4 className="px-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2">
+                        {group.icon} {group.title}
+                      </h4>
+                      <div className="space-y-1">
+                        {group.items.map((item) => (
+                          <button 
+                            key={item} 
+                            className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition-all flex items-center gap-2 group"
+                          >
+                            <div className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-blue-500 transition-colors" />
+                            {item}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </ScrollArea>
+
+              {/* Fixed Create Button at Bottom of Sidebar */}
+              <div className="p-4 border-t border-slate-50 space-y-4  text-black bg-black">
+             <NewProject 
+                  triggerText="New Project" 
+                />
+                <div className="space-y-1">
+                  <Button variant="ghost" className="w-full justify-start gap-3 text-slate-500 hover:text-blue-600 h-10 px-3">
+                    <Settings size={18} /> <span className="text-sm">Settings</span>
+                  </Button>
+                  <Button variant="ghost" className="w-full justify-start gap-3 text-red-400 hover:text-red-600 hover:bg-red-50 h-10 px-3">
+                    <LogOut size={18} /> <span className="text-sm">Logout</span>
+                  </Button>
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
+
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-blue-500 mb-1">Workspace Overview</p>
+            <h2 className="text-2xl md:text-3xl font-black tracking-tight text-slate-800">
+              Project <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500">DASHBOARD</span>
+            </h2>
           </div>
+        </div>
+
+        <div className="hidden sm:flex items-center gap-3">
+            <div className="text-right">
+                <p className="text-sm font-bold text-slate-700">Emily Admin</p>
+                <p className="text-xs text-slate-400">Pro Plan</p>
+            </div>
+            <div className="h-10 w-10 rounded-full bg-gradient-to-tr from-blue-100 to-indigo-100 border border-blue-200 flex items-center justify-center font-bold text-blue-600">
+                E
+            </div>
         </div>
       </header>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
         {cards.map((card, index) => (
-          <div key={index} className="bg-white rounded-2xl border border-blue-50 shadow-sm p-6 flex items-center hover:shadow-md transition-all duration-300 group">
-            <div className="h-14 w-14 rounded-xl bg-blue-50 flex items-center justify-center group-hover:bg-blue-400 transition-colors duration-300">
-              <span className="group-hover:text-white transition-colors duration-300">{card.logo}</span>
+          <div key={index} className="bg-white rounded-3xl border border-blue-50 shadow-sm p-6 flex items-center hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group">
+            <div className="h-14 w-14 rounded-2xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+              {card.logo}
             </div>
             <div className="ml-5">
-              <p className="text-sm font-medium text-slate-500 uppercase tracking-wider">{card.name}</p>
-              <h3 className="text-2xl font-bold text-slate-800">{card.value}</h3>
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">{card.name}</p>
+              <h3 className="text-2xl font-black text-slate-800 tracking-tight">{card.value}</h3>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Main Content Grid */}
-      <div className="flex flex-col lg:flex-row gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        {/* Left Column: Activity & Assistant */}
-        <div className="lg:basis-3/4 space-y-8">
-          
-          {/* Recent Activity */}
-          <section className="bg-white rounded-3xl shadow-sm border border-blue-50 overflow-hidden">
-            <div className="p-6 border-b border-slate-50 flex items-center justify-between">
-              <h2 className="text-xl font-bold flex items-center gap-2">
-                <Activity className="text-blue-600" size={22} /> Recent Activity
-              </h2>
-              <button className="text-sm font-semibold text-blue-600 hover:text-blue-700">View All</button>
-            </div>
-            <ScrollArea className="h-80 px-6">
-              {activi.map((act, index) => (
-                <div key={index} className="flex items-center justify-between py-4 border-b border-slate-50 last:border-0 hover:bg-blue-50/30 px-2 rounded-xl transition-colors">
-                  <div>
-                    <h3 className="font-semibold text-slate-800">{act.name}</h3>
-                    <p className={`text-xs font-bold uppercase ${act.value === 'Completed' ? 'text-green-500' : (act.value==="Pending"?'text-blue-400':'text-yellow-400')}`}>
-                      {act.value}
-                    </p>
-                  </div>
-                  <span className="text-sm text-slate-400">{act.time}</span>
-                </div>
-              ))}
-            </ScrollArea>
-          </section>
-
-          {/* AI Assistant Chat Area */}
-          <section className="bg-linear-to-br from-blue-600 to-indigo-700 rounded-3xl p-6 text-white shadow-lg shadow-blue-200">
-            <div className="flex items-center gap-2 mb-4">
-              <Sparkles size={20} />
-              <h2 className="text-lg font-bold">AI Assistant</h2>
-            </div>
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-4 min-h-37.5 border border-white/20">
-              <p className="text-blue-50 italic">"How can I help you optimize your workflow today?"</p>
-              {/* Add a mini input style placeholder */}
-              <div className="mt-8 bg-white/20 rounded-lg p-3 text-sm text-blue-100 flex justify-between items-center">
-                Ask a question...
-                <div className="bg-white text-blue-600 p-1 rounded-md">
-                   <LayoutDashboard size={14} />
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        {/* Right Column: AI Insights / Sidebar */}
-        <div className="lg:basis-1/4">
-          <div className="bg-white rounded-3xl border border-blue-50 p-6 sticky top-8 shadow-sm">
-             <div className="flex items-center gap-2 mb-6">
-                <div className="h-2 w-2 rounded-full bg-blue-600 animate-pulse"></div>
-                <h3 className="text-lg font-bold">Smart Insights</h3>
-             </div>
-             <div className="space-y-6">
-                <div className="p-4 bg-orange-50 rounded-2xl border border-orange-100">
-                   <p className="text-xs font-bold text-orange-600 uppercase mb-1">Alert</p>
-                   <p className="text-sm text-slate-700">3 tasks are reaching their deadline in 2 hours.</p>
-                </div>
-                <div className="p-4 bg-blue-50 rounded-2xl border border-blue-100">
-                   <p className="text-xs font-bold text-blue-600 uppercase mb-1">Efficiency</p>
-                   <p className="text-sm text-slate-700">Your team completed 15% more tasks this week!</p>
-                </div>
-             </div>
+        {/* Activity Feed */}
+        <section className="lg:col-span-8 bg-white rounded-[2rem] shadow-sm border border-blue-50 overflow-hidden">
+          <div className="p-8 border-b border-slate-50 flex items-center justify-between">
+            <h2 className="text-xl font-extrabold flex items-center gap-3">
+              <div className="bg-blue-50 p-2 rounded-lg text-blue-600">
+                <Activity size={20} />
+              </div> 
+              Recent Activity
+            </h2>
+            <Button variant="link" className="text-blue-600 font-bold p-0">View All</Button>
           </div>
+          <ScrollArea className="h-[400px] p-2">
+            <div className="px-6">
+                {activi.map((act, index) => (
+                <div key={index} className="flex items-center justify-between py-5 border-b border-slate-50 last:border-0 hover:bg-slate-50/50 transition-colors rounded-2xl px-4">
+                    <div className="flex items-center gap-4">
+                        <div className={`h-2.5 w-2.5 rounded-full ${act.value === 'Completed' ? 'bg-emerald-400' : act.value === 'In Progress' ? 'bg-blue-400' : 'bg-slate-300'}`} />
+                        <div>
+                            <h3 className="font-bold text-slate-800 text-sm">{act.name}</h3>
+                            <p className="text-[10px] font-black uppercase tracking-wider text-slate-400 mt-0.5">
+                                {act.value}
+                            </p>
+                        </div>
+                    </div>
+                    <span className="text-xs font-medium text-slate-400 bg-slate-100 px-3 py-1 rounded-full">{act.time}</span>
+                </div>
+                ))}
+            </div>
+          </ScrollArea>
+        </section>
+
+        {/* Sidebar/Insights */}
+        <div className="lg:col-span-4 space-y-6">
+            {/* AI Assistant Chat Area */}
+            <section className="bg-gradient-to-br from-slate-900 to-indigo-950 rounded-[2rem] p-8 text-white shadow-2xl relative overflow-hidden group">
+                <div className="absolute -right-4 -top-4 bg-white/5 h-32 w-32 rounded-full blur-3xl group-hover:bg-blue-500/20 transition-all duration-500" />
+                <div className="flex items-center gap-3 mb-6">
+                    <div className="bg-white/10 p-2 rounded-xl backdrop-blur-sm">
+                        <Sparkles size={22} className="text-blue-400" />
+                    </div>
+                    <h2 className="text-lg font-black tracking-tight">AI Assistant</h2>
+                </div>
+                <div className="space-y-6 relative z-10">
+                    <p className="text-blue-100/80 text-sm leading-relaxed font-medium">
+                        "I noticed your <span className="text-blue-400 font-bold underline">API Integration</span> task is taking longer than usual. Should I generate a quick refactor plan?"
+                    </p>
+                    <div className="bg-white/5 border border-white/10 rounded-2xl p-4 text-xs text-blue-200/60 flex justify-between items-center group-hover:bg-white/10 transition-all cursor-pointer">
+                        Ask SyncSphere...
+                        <div className="bg-blue-500 text-white p-1.5 rounded-lg shadow-lg">
+                            <Plus size={14} />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="bg-white rounded-[2rem] border border-blue-50 p-8 shadow-sm">
+                <div className="flex items-center gap-3 mb-8">
+                    <div className="h-2.5 w-2.5 rounded-full bg-blue-600 animate-pulse ring-4 ring-blue-50"></div>
+                    <h3 className="text-lg font-bold">Smart Insights</h3>
+                </div>
+                <div className="space-y-4">
+                    <div className="p-5 bg-amber-50/50 rounded-2xl border border-amber-100 group hover:bg-amber-50 transition-all">
+                        <p className="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-1">Critical Alert</p>
+                        <p className="text-sm font-bold text-slate-700 leading-tight">3 tasks reaching deadline in under 2 hours.</p>
+                    </div>
+                    <div className="p-5 bg-blue-50/50 rounded-2xl border border-blue-100 group hover:bg-blue-50 transition-all">
+                        <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1">Performance</p>
+                        <p className="text-sm font-bold text-slate-700 leading-tight">Task velocity increased by 12.4% today.</p>
+                    </div>
+                </div>
+            </section>
         </div>
 
       </div>

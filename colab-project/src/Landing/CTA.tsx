@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const CTA = () => {
   return (
@@ -20,14 +21,16 @@ const CTA = () => {
           <p className="text-primary-foreground/80 text-lg max-w-xl mx-auto mb-8">
             Join thousands of teams already shipping faster with TaskFlow.
           </p>
+          <Link to="/auth">
           <Button
             size="lg"
             variant="secondary"
             className="text-base px-8 font-semibold text-blue-600 hover:text-blue-700 bg-white hover:bg-white/90 transition-colors cursor-pointer"
-          >
+             >
             Get Started Free
             <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
+          </Link>
         </motion.div>
       </div>
     </section>
