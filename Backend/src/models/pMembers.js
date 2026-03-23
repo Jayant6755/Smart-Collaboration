@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const pmembers=new mongoose.Schema({
     projectId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Project",
+        ref:"Projects",
         required:true
     },
     memberId:{

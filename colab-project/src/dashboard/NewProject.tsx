@@ -26,14 +26,14 @@ interface NewProjectProps {
 function NewProject({ triggerText }: NewProjectProps) {
   const [open, setOpen] = useState(false)
   
-  const {createProject,getProject,isloading}=useProjectState()
+  const {createProject,isloading}=useProjectState()
   const {user}=useAuthState()
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     createdBy:user?.id||" "
   })
-  console.table(user)
+  
 
   const handleSubmit = async (e:any) => {
     e.preventDefault()

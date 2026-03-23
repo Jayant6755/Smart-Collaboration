@@ -12,20 +12,57 @@ import {
   SheetTrigger 
 } from "@/components/ui/sheet"
 import NewProject from "./NewProject"
+import { useEffect } from "react"
+import { useProjectState } from "@/useState/projectState"
+import { useAuthState } from "@/useState/authState"
+
+
 
 function Main() {
-  const projectGroups = [
-    {
-      title: "Favorites",
-      icon: <Star size={14} className="text-amber-500" />,
-      items: ["Project Alpha", "Marketing Site"]
-    },
-    {
-      title: "Active Projects",
-      icon: <Folder size={14} className="text-blue-500" />,
-      items: ["Project Gamma", "Database Sync", "Mobile App UI"]
-    }
-  ]
+const {getProject,projects}=useProjectState()
+const {user}=useAuthState()
+  useEffect(()=>{
+    console.log(user?.id)
+      const funct=async()=>{
+        getProject(user?.id)
+      }
+      funct()
+  },[])
+
+  console.log(projects)
+  const projectGroups = projects?.length ? (
+  projects.map((group, idx) => (
+    <div
+      key={idx}
+      className="group flex items-center justify-between p-3 rounded-xl hover:bg-blue-50 cursor-pointer transition-all"
+    >
+      <div className="flex items-center gap-3">
+        <div className="bg-blue-100 text-blue-600 p-2 rounded-lg">
+          <Folder size={16} />
+        </div>
+
+        <div>
+          <p className="text-sm font-semibold text-slate-700 group-hover:text-blue-600">
+            {group?.projectId?.pName || "Untitled"}
+          </p>
+          <p className="text-[10px] text-slate-400">
+            {group?.role || "member"}
+          </p>
+        </div>
+      </div>
+
+      {group?.role === "admin" && (
+        <span className="text-[10px] px-2 py-0.5 bg-amber-100 text-amber-600 rounded-full font-bold">
+          Admin
+        </span>
+      )}
+    </div>
+  ))
+) : (
+  <div className="text-center text-sm text-slate-400 py-6">
+    No projects yet 🚀
+  </div>
+);
 
   const cards = [
     { name: "Active Tasks", value: 12, logo: <ThermometerSnowflake size={20} /> },
@@ -54,34 +91,23 @@ function Main() {
             </SheetTrigger>
             <SheetContent side="left" className="w-80 p-0 border-r-blue-50 flex flex-col">
               <SheetHeader className="p-6 border-b border-slate-50">
-                <SheetTitle className="flex items-center gap-3 text-blue-600 font-bold text-xl">
-                  <div className="bg-blue-600 p-1.5 rounded-lg text-white">
-                    <LayoutDashboard size={18} />
-                  </div>
-                  SyncSphere
-                </SheetTitle>
-              </SheetHeader>
+  <SheetTitle className="flex items-center justify-between">
+    <div className="flex items-center gap-3 text-blue-600 font-bold text-xl">
+      <div className="bg-blue-600 p-1.5 rounded-lg text-white">
+        <LayoutDashboard size={18} />
+      </div>
+      SyncSphere
+    </div>
+
+    <Star className="text-amber-400" size={18} />
+  </SheetTitle>
+</SheetHeader>
 
               <ScrollArea className="flex-1 px-4 py-6">
                 <div className="space-y-8">
-                  {projectGroups.map((group, idx) => (
-                    <div key={idx} className="space-y-3">
-                      <h4 className="px-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2">
-                        {group.icon} {group.title}
-                      </h4>
-                      <div className="space-y-1">
-                        {group.items.map((item) => (
-                          <button 
-                            key={item} 
-                            className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition-all flex items-center gap-2 group"
-                          >
-                            <div className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-blue-500 transition-colors" />
-                            {item}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
+                  {   
+                  projectGroups
+                  }
                 </div>
               </ScrollArea>
 

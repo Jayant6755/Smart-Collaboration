@@ -103,7 +103,11 @@ export const useAuthState = create<AuthState>((set) => ({
    
     const res = await axiosInstance.get("/check");
     console.log(res.data.user)
-    set({
+    set({  user:{
+          id:res.data.id,
+          fullName:res.data.fullName,
+          email:res.data.email
+        },
       isAuthenticated: res.data.user
     });
 

@@ -4,20 +4,21 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { User, Mail, Lock, Loader2 } from 'lucide-react'
 import { useAuthState } from '@/useState/authState'
-import { Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 export default function Signup() {
   
   const [formData, setFormData] = useState({ fullName: '', email: '', password: '' })
   const {signUp,isLoading,checkAuth}=useAuthState()
+  const navigate=useNavigate();
   const handleSubmit = async (e:any) => {
    e.preventDefault()
    try{
     
     await signUp(formData);
-    <Navigate to="/chat"/>
-     
+    
+     navigate("/")
    }
     catch(error){
         console.log(error)

@@ -1,10 +1,17 @@
 import {create} from 'zustand'
 import { axiosInstance } from '@/lib/axios'
 
+interface Project{
+  pName:string,
+  _id:string
+}
+
 interface Projects{
-    id:string,
-    name:string,
-    
+  createdAt:Date,
+  memberId:string,
+  projectId:Project,
+  role:string,
+  _id:string
 }
 interface FormData{
     name:string,
@@ -16,7 +23,7 @@ interface projectState{
     isloading:boolean,
     projects:Projects[],
     createProject:(formData:FormData)=>Promise<void>,
-    getProject:()=>void
+    getProject:(id:string|undefined)=>void
 }
 
 export const useProjectState=create<projectState>((set)=>({
@@ -38,8 +45,15 @@ export const useProjectState=create<projectState>((set)=>({
         }
       
     },
-    getProject:async()=>{
-       const res= await axiosInstance.get("/projects");
+    getProject:async(id:string|undefined)=>{
+
+        try {
+            console.log(id)
+       const res= await axiosInstance.get(`/userProjects/${id}`);
         set({projects:res.data})
+        } catch (error) {
+            
+        }
+        
     }
 }))

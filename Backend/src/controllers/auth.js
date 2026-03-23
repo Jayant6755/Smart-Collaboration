@@ -100,7 +100,7 @@ export const checkAuth=async(req,res)=>{
       return res.status(404).send({ message: "User not found" });
     }
       
-    res.send({message:'user found',user:true});
+    res.send({message:'user found',user:true,fullName:user.fullName,id:user._id});
 
   } catch (error) {
     res.status(401).send({ message: "Invalid token" });
