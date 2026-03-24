@@ -1,10 +1,60 @@
 import { Link, useLocation } from "react-router-dom";
-import { Bell, LogOut, Settings, LayoutGrid, MessageSquare, ClipboardList } from "lucide-react";
+import { Bell, LogOut, Settings, LayoutGrid, MessageSquare, ClipboardList, LayoutDashboard, Menu, Star, Folder } from "lucide-react";
 import { useAuthState } from "@/useState/authState";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import NewProject from "@/dashboard/NewProject";
+import { useProjectState } from "@/useState/projectState";
+import { useEffect } from "react";
 
 function Navbar() {
   const location = useLocation();
   const {signOut}=useAuthState()
+
+  const {getProject,projects}=useProjectState()
+const {user}=useAuthState()
+  useEffect(()=>{
+      const funct=async()=>{
+        getProject(user?.id)
+      }
+      funct()
+  },[])
+
+  
+  const projectGroups = projects?.length ? (
+  projects.map((group, idx) => (
+    <div
+      key={idx}
+      className="group flex items-center justify-between p-3 rounded-xl hover:bg-blue-50 cursor-pointer transition-all"
+    >
+      <div className="flex items-center gap-3">
+        <div className="bg-blue-100 text-blue-600 p-2 rounded-lg">
+          <Folder size={16} />
+        </div>
+
+        <div>
+          <p className="text-sm font-semibold text-slate-700 group-hover:text-blue-600">
+            {group?.projectId?.pName || "Untitled"}
+          </p>
+          <p className="text-[10px] text-slate-400">
+            {group?.role || "member"}
+          </p>
+        </div>
+      </div>
+
+      {group?.role === "admin" && (
+        <span className="text-[10px] px-2 py-0.5 bg-amber-100 text-amber-600 rounded-full font-bold">
+          Admin
+        </span>
+      )}
+    </div>
+  ))
+) : (
+  <div className="text-center text-sm text-slate-400 py-6">
+    No projects yet 🚀
+  </div>
+);
+
 
   const navigations = [
     { name: 'Dashboard', link: '/', icon: <LayoutGrid size={18} /> },
@@ -78,6 +128,65 @@ function Navbar() {
         </div>
 
       </div>
+      <div className="flex items-center gap-3 basis-1/4">
+  <Sheet>
+    <SheetTrigger >
+      <Button
+        variant="outline"
+        size="icon"
+        className="rounded-xl border-blue-100 bg-white shadow-sm hover:bg-blue-50"
+      >
+        <Menu className="text-blue-600" size={20} />
+      </Button>
+    </SheetTrigger>
+
+    <SheetContent
+      side="left"
+      className="w-80 p-0 flex flex-col bg-white"
+    >
+      {/* Header */}
+      <SheetHeader className="p-6 border-b border-slate-100">
+        <SheetTitle className="flex items-center justify-between">
+          <div className="flex items-center gap-3 text-blue-600 font-bold text-lg">
+            <LayoutDashboard size={18} />
+            Projects
+          </div>
+          <Star className="text-amber-400" size={18} />
+        </SheetTitle>
+      </SheetHeader>
+
+      {/* Project List */}
+      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-2">
+        {projectGroups}
+      </div>
+
+      {/* Bottom Actions */}
+      <div className="p-4 border-t border-slate-100 space-y-3 bg-white">
+        <NewProject triggerText="New Project" />
+
+        <Button
+          variant="ghost"
+          className="w-full justify-start gap-3 text-slate-500 hover:text-blue-600"
+        >
+          <Settings size={18} />
+          Settings
+        </Button>
+
+        <Button
+          variant="ghost"
+          onClick={signout}
+          className="w-full justify-start gap-3 text-red-500 hover:bg-red-50"
+        >
+          <LogOut size={18} />
+          Logout
+        </Button>
+      </div>
+    </SheetContent>
+  </Sheet>
+
+ 
+ 
+</div>
     </nav>
   );
 }

@@ -1,34 +1,14 @@
 import { 
-  MoreHorizontal, Plus, User, CheckCircle2, Clock, Eye, ListTodo, 
-  Menu, LayoutDashboard, Star, Folder, Hash, Settings, LogOut 
+  MoreHorizontal, Plus, CheckCircle2, Clock, Eye, ListTodo, 
+  
 } from "lucide-react";
 import { AddTask } from "./AddTask";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { 
-  Sheet, 
-  SheetContent, 
-  SheetHeader, 
-  SheetTitle, 
-  SheetTrigger 
-} from "@/components/ui/sheet";
+
 
 
 function Task() {
   // Static Project Groups (Shared with Main Dashboard)
-  const projectGroups = [
-    {
-      title: "Favorites",
-      icon: <Star size={14} className="text-amber-500" />,
-      items: ["Project Alpha", "Marketing Site"]
-    },
-    {
-      title: "Active Projects",
-      icon: <Folder size={14} className="text-blue-500" />,
-      items: ["Project Gamma", "Database Sync", "Mobile App UI"]
-    }
-  ];
-
+ 
   const boardData = [
     {
       title: "To Do",
@@ -70,71 +50,7 @@ function Task() {
   return (
     <div className="min-h-screen bg-[#f8faff] p-4 md:p-8 font-sans">
       
-      {/* --- HEADER WITH SIDEBAR TRIGGER --- */}
-      <header className="mb-10 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Sheet>
-            <SheetTrigger >
-              <Button variant="outline" size="icon" className="rounded-xl border-blue-100 bg-white shadow-sm hover:bg-blue-50">
-                <Menu className="text-blue-600" size={20} />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-80 p-0 border-r-blue-50 flex flex-col">
-              <SheetHeader className="p-6 border-b border-slate-50">
-                <SheetTitle className="flex items-center gap-3 text-blue-600 font-bold text-xl">
-                  <div className="bg-blue-600 p-1.5 rounded-lg text-white">
-                    <LayoutDashboard size={18} />
-                  </div>
-                  SyncSphere
-                </SheetTitle>
-              </SheetHeader>
-
-              <ScrollArea className="flex-1 px-4 py-6">
-                <div className="space-y-8">
-                  {projectGroups.map((group, idx) => (
-                    <div key={idx} className="space-y-3">
-                      <h4 className="px-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2">
-                        {group.icon} {group.title}
-                      </h4>
-                      <div className="space-y-1">
-                        {group.items.map((item) => (
-                          <button key={item} className="w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition-all flex items-center gap-2 group">
-                            <div className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-blue-500" />
-                            {item}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </ScrollArea>
-
-             
-            </SheetContent>
-          </Sheet>
-
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-blue-500 mb-1">Project Gamma</p>
-            <h1 className="text-2xl font-black text-slate-800 tracking-tight">Project BOARD</h1>
-          </div>
-        </div>
-        
-        <AddTask 
-          status="To-Do" 
-          title="Create New Task" 
-          onSave={handleSave}
-          trigger={
-            <Button type="button" className="bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-200 gap-2 rounded-xl">
-              <Plus size={18} /> New Task
-            </Button>
-          }
-        >
-          <div className="space-y-4">
-            <input className="w-full p-2 border rounded-md" placeholder="Task Name" />
-            <textarea className="w-full p-2 border rounded-md" placeholder="Description" />
-          </div>
-        </AddTask>
-      </header>
+    
 
       
       <div className="flex flex-row gap-6 overflow-x-auto pb-6">

@@ -17,7 +17,6 @@ export default function Signup() {
    try{
     
     await signUp(formData);
-    
      navigate("/")
    }
     catch(error){

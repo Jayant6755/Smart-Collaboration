@@ -4,7 +4,7 @@ const taskSchema = new mongoose.Schema({
     type:String,
     required:true
   },
-  description:String,
+  description:{type:String},
   projectId:{
     type:mongoose.Schema.Types.ObjectId,
     ref:"Project"
@@ -22,7 +22,7 @@ const taskSchema = new mongoose.Schema({
     type:String,
     enum:["low","medium","high"]
   },
-  dueDate:Date
+  dueDate:{type:Date}
 },{timestamps:true})
 
 export const Task=mongoose.model("Task",taskSchema)

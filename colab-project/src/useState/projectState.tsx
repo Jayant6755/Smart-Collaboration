@@ -22,12 +22,14 @@ interface FormData{
 interface projectState{
     isloading:boolean,
     projects:Projects[],
+    currentProject:string |null,
     createProject:(formData:FormData)=>Promise<void>,
     getProject:(id:string|undefined)=>void
 }
 
 export const useProjectState=create<projectState>((set)=>({
     projects:[],
+    currentProject:null,
     isloading:false,
 
     createProject:async(formData)=>{
@@ -48,11 +50,14 @@ export const useProjectState=create<projectState>((set)=>({
     getProject:async(id:string|undefined)=>{
 
         try {
-            console.log(id)
-       const res= await axiosInstance.get(`/userProjects/${id}`);
-        set({projects:res.data})
-        } catch (error) {
             
+       const res= await axiosInstance.get(`/userProjects/${id}`);
+        set({projects:res.data,
+            currentProject:res.data[0]
+        })
+        
+        } catch (error) {
+            console.log(error)
         }
         
     }

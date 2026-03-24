@@ -40,10 +40,11 @@ export const getProject=async(req,reply)=>{
     try {
         const {id}=req.params
         const user=verifyToken(req.cookies.token);
+        console.log(id)
         if(!user) return reply.status(401).send({message:"user not authorized"});
         
         const Projects=await Pmembers.find({memberId:id}).populate("projectId","pName");
-        console.table(Projects)
+        
         if(!Projects) return reply.status(200).send({message:"You are in no Groups"});
         
         return reply.status(200).send(Projects);

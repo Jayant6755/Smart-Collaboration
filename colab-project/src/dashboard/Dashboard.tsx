@@ -1,68 +1,16 @@
 import { 
   File, ThermometerSnowflake, User, Sparkles, Activity, 
-  LayoutDashboard, Menu, Folder, Hash, Star, Settings, LogOut, Plus 
+   Plus 
 } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
-import { 
-  Sheet, 
-  SheetContent, 
-  SheetHeader, 
-  SheetTitle, 
-  SheetTrigger 
-} from "@/components/ui/sheet"
-import NewProject from "./NewProject"
-import { useEffect } from "react"
-import { useProjectState } from "@/useState/projectState"
-import { useAuthState } from "@/useState/authState"
+
+
 
 
 
 function Main() {
-const {getProject,projects}=useProjectState()
-const {user}=useAuthState()
-  useEffect(()=>{
-    console.log(user?.id)
-      const funct=async()=>{
-        getProject(user?.id)
-      }
-      funct()
-  },[])
 
-  console.log(projects)
-  const projectGroups = projects?.length ? (
-  projects.map((group, idx) => (
-    <div
-      key={idx}
-      className="group flex items-center justify-between p-3 rounded-xl hover:bg-blue-50 cursor-pointer transition-all"
-    >
-      <div className="flex items-center gap-3">
-        <div className="bg-blue-100 text-blue-600 p-2 rounded-lg">
-          <Folder size={16} />
-        </div>
-
-        <div>
-          <p className="text-sm font-semibold text-slate-700 group-hover:text-blue-600">
-            {group?.projectId?.pName || "Untitled"}
-          </p>
-          <p className="text-[10px] text-slate-400">
-            {group?.role || "member"}
-          </p>
-        </div>
-      </div>
-
-      {group?.role === "admin" && (
-        <span className="text-[10px] px-2 py-0.5 bg-amber-100 text-amber-600 rounded-full font-bold">
-          Admin
-        </span>
-      )}
-    </div>
-  ))
-) : (
-  <div className="text-center text-sm text-slate-400 py-6">
-    No projects yet 🚀
-  </div>
-);
 
   const cards = [
     { name: "Active Tasks", value: 12, logo: <ThermometerSnowflake size={20} /> },
@@ -83,50 +31,7 @@ const {user}=useAuthState()
       {/* Header Section */}
       <header className="mb-10 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Sheet>
-            <SheetTrigger >
-              <Button variant="outline" size="icon" className="rounded-xl border-blue-100 bg-white shadow-sm hover:bg-blue-50 transition-colors">
-                <Menu className="text-blue-600" size={20} />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-80 p-0 border-r-blue-50 flex flex-col">
-              <SheetHeader className="p-6 border-b border-slate-50">
-  <SheetTitle className="flex items-center justify-between">
-    <div className="flex items-center gap-3 text-blue-600 font-bold text-xl">
-      <div className="bg-blue-600 p-1.5 rounded-lg text-white">
-        <LayoutDashboard size={18} />
-      </div>
-      SyncSphere
-    </div>
-
-    <Star className="text-amber-400" size={18} />
-  </SheetTitle>
-</SheetHeader>
-
-              <ScrollArea className="flex-1 px-4 py-6">
-                <div className="space-y-8">
-                  {   
-                  projectGroups
-                  }
-                </div>
-              </ScrollArea>
-
-              {/* Fixed Create Button at Bottom of Sidebar */}
-              <div className="p-4 border-t border-slate-50 space-y-4  text-black bg-black">
-             <NewProject 
-                  triggerText="New Project" 
-                />
-                <div className="space-y-1">
-                  <Button variant="ghost" className="w-full justify-start gap-3 text-slate-500 hover:text-blue-600 h-10 px-3">
-                    <Settings size={18} /> <span className="text-sm">Settings</span>
-                  </Button>
-                  <Button variant="ghost" className="w-full justify-start gap-3 text-red-400 hover:text-red-600 hover:bg-red-50 h-10 px-3">
-                    <LogOut size={18} /> <span className="text-sm">Logout</span>
-                  </Button>
-                </div>
-              </div>
-            </SheetContent>
-          </Sheet>
+          
 
           <div>
             <p className="text-[10px] font-bold uppercase tracking-widest text-blue-500 mb-1">Workspace Overview</p>
